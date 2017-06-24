@@ -89,6 +89,7 @@ class App extends Component{
             name: text,
             topic:[]
         }
+    console.log(this.state.subjects.concat(newSubject))
         this.setState({subjects: this.state.subjects.concat(newSubject)})
     }
     
@@ -99,14 +100,37 @@ class App extends Component{
             name: text,
             notes:[]
         }
+        var data =  this.state.subjects
+        data[k].topic = data[k].topic.concat(newTopic);
+        console.log(data);
+        this.setState({subjects: data})
         
     }
+    
+        handleAddNotes(text , k , key){
+        alert(text);
+            console.log(this.state.subjects[k].topic[key].notes.length + 1);
+            var newNote = {
+            id: this.state.subjects[k].topic[key].notes.length + 1,
+            name: text
+        }
+             var data =  this.state.subjects
+             console.log(data[k].topic[key].notes.concat(newNote));
+        data[k].topic[key].notes = data[k].topic[key].notes.concat(newNote);
+            console.log(data[k].topic[key].notes);
+        console.log(data);
+        this.setState({subjects: data})
+       
+    }
 
+    componentWillMount(){
+       
+    }
     render(){
         return(
             <div className="App">
                 <Addsubject addSubject={(text)=>this.handleAddSubject(text)}/>
-                <List subjects={this.state.subjects} topicAdd={(text,k)=>this.handleAddTopic(text , k)}/>
+                <List subjects={this.state.subjects} topicAdd={(text,k)=>this.handleAddTopic(text , k)} notesAdd={(text,k,key)=>this.handleAddNotes(text , k , key)}/>
                 
             </div>
                   
