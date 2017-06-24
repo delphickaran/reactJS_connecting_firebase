@@ -35,6 +35,7 @@ class List extends Component {
         this.props.notesAdd(text1 , k , key);
         this.setState({inputValue : ""})
     }
+    
  
     render(){
         return (
@@ -44,15 +45,16 @@ class List extends Component {
                       
                   {    
                       this.props.subjects.map((data,k)=> {
-                          return <li key={data.id}>{data.name}
-                               
-                              <ul> 
+                          return <li key={data.id}>{data.name} 
+                               <button onClick={this.props.deleteSubject.bind(null,k)}>X</button>
+                              <ul>
+                                  
                                   <form className="form-group" onSubmit={(e)=>this.addTopic(e , k)}>
                                       <input type="text" ref="topic" onChange={(e)=>this.changeTopic(e)} placeholder="Enter new topic"/>
                                       <button className="btn btn-primary">Add Topic</button></form>
                                   {
                                         data.topic.map((data1 , key)=>{
-                                            return <li key={data1.id}>{data1.name}
+                                            return <li key={data1.id}>{data1.name} <button onClick={this.props.deleteTopic.bind(null,k,key)}>X</button>
                                                 
                                                 <ul>
                                                     <form className="form-group" onSubmit={(e)=>this.addNotes(e , k , key)}>
@@ -62,8 +64,8 @@ class List extends Component {
                                                    
                                                     {
                                                         
-                                                            data1.notes.map(data2=>{
-                                                                return <li key={data2.id}>{data2.name}
+                                                            data1.notes.map((data2,key2)=>{
+                                                                return <li key={data2.id}>{data2.name} <button onClick={this.props.deleteNote.bind(null,k,key,key2)}>X</button>
                                                                  
                                                                     </li>
                                                             })

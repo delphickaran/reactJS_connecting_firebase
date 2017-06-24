@@ -100,7 +100,7 @@ class App extends Component{
             name: text,
             notes:[]
         }
-        var data =  this.state.subjects
+        var data =  this.state.subjects;
         data[k].topic = data[k].topic.concat(newTopic);
         console.log(data);
         this.setState({subjects: data})
@@ -122,6 +122,32 @@ class App extends Component{
         this.setState({subjects: data})
        
     }
+    
+   deleteSubject(k){  
+    console.log( k)
+
+    var data = this.state.subjects;
+       console.log(data);
+       
+      data.splice(k,1);
+      console.log(data);
+      this.setState({subjects : data})
+    }
+    deleteTopic(k,key){  
+        console.log( k +" " + key)
+        var data =  this.state.subjects;
+        data[k].topic.splice(key,1);
+        console.log(data);
+        this.setState({subjects: data})
+    }
+    deleteNote(k,key,key2){  
+        console.log(k + " "+ key +" "+ key2)
+        var data =  this.state.subjects
+        data[k].topic[key].notes.splice(key2,1);
+        console.log(data);
+        this.setState({subjects: data})
+    }
+ 
 
     componentWillMount(){
        
@@ -130,7 +156,7 @@ class App extends Component{
         return(
             <div className="App">
                 <Addsubject addSubject={(text)=>this.handleAddSubject(text)}/>
-                <List subjects={this.state.subjects} topicAdd={(text,k)=>this.handleAddTopic(text , k)} notesAdd={(text,k,key)=>this.handleAddNotes(text , k , key)}/>
+                <List subjects={this.state.subjects} topicAdd={(text,k)=>this.handleAddTopic(text , k)} notesAdd={(text,k,key)=>this.handleAddNotes(text , k , key)} deleteSubject={this.deleteSubject.bind(this)} deleteTopic={this.deleteTopic.bind(this)} deleteNote={this.deleteNote.bind(this)}/>
                 
             </div>
                   
