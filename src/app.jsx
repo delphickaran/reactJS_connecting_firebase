@@ -83,7 +83,6 @@ class App extends Component{
     }
    
     handleAddSubject(text){
-        alert(text);
         var newSubject = {
             id: this.state.subjects.length + 1,
             name: text,
@@ -94,7 +93,6 @@ class App extends Component{
     }
     
     handleAddTopic(text , k){
-        alert(text);
         var newTopic = {
             id: this.state.subjects[k].topic.length + 1,
             name: text,
@@ -108,7 +106,6 @@ class App extends Component{
     }
     
         handleAddNotes(text , k , key){
-        alert(text);
             console.log(this.state.subjects[k].topic[key].notes.length + 1);
             var newNote = {
             id: this.state.subjects[k].topic[key].notes.length + 1,

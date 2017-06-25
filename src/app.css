@@ -1,9 +1,24 @@
 .App{
-    font-size: 35px;
+    font-size: 20px;
+    padding: 20px;
 
 }
 .appTitle{
     font-size: 50px;
     color: red;
     margin-bottom: 15px;
+}
+.subjectList{
+    display: flex;
+}
+.btn{
+    padding:0px 5px;
+    margin-left: 10px;
+}
+li{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+.form-group{
+    margin-top: 15px;
 }

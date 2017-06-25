@@ -5,56 +5,67 @@ class List extends Component {
     constructor(props){
         super(props);
         this.state = {
-            inputValue :""
+            inputTopic :"",
+            inputNote : ""
         }
         console.log("this.props", this.props)
     }
     
     changeTopic(e){
         console.log(e.target.value)
-        this.setState({inputValue : e.target.value})
+        this.setState({inputTopic : e.target.value})
+         
     }
     addTopic(e , k){
         e.preventDefault();
-        var text1 = this.state.inputValue;
+        var text1 = this.state.inputTopic;
         console.log(text1);
         console.log(k);
+        if(text1!==""){
         this.props.topicAdd(text1 , k);
-        this.setState({inputValue : ""})
+            }
+        else{
+            alert("enter a topic");
+        }
+        this.setState({inputTopic : ""})
     }
     
     changeNotes(e){
         console.log(e.target.value)
-        this.setState({inputValue : e.target.value})
+        this.setState({inputNote : e.target.value})
     }
     addNotes(e , k , key){
         e.preventDefault();
-        var text1 = this.state.inputValue;
+        var text1 = this.state.inputNote;
         console.log(text1);
         console.log(k + " " + key);
+        if(text1!==""){
         this.props.notesAdd(text1 , k , key);
-        this.setState({inputValue : ""})
+            }
+        else{
+            alert("enter a note");
+        }
+        this.setState({inputNote : ""})
     }
     
  
     render(){
         return (
         <div>
-          <ul className="list-group">
-              <div>
-                      
+          <ul className="list-inline">
+              <div className="subjectList">   
                   {    
                       this.props.subjects.map((data,k)=> {
                           return <li key={data.id}>{data.name} 
-                               <button onClick={this.props.deleteSubject.bind(null,k)}>X</button>
-                              <ul>
-                                  
+                               <button className="btn btn-danger" onClick={this.props.deleteSubject.bind(null,k)}>X</button>
+                              <ul> 
                                   <form className="form-group" onSubmit={(e)=>this.addTopic(e , k)}>
                                       <input type="text" ref="topic" onChange={(e)=>this.changeTopic(e)} placeholder="Enter new topic"/>
                                       <button className="btn btn-primary">Add Topic</button></form>
                                   {
                                         data.topic.map((data1 , key)=>{
-                                            return <li key={data1.id}>{data1.name} <button onClick={this.props.deleteTopic.bind(null,k,key)}>X</button>
+                                            return <li key={data1.id}>{data1.name}
+                                                <button className="btn btn-danger" onClick={this.props.deleteTopic.bind(null,k,key)}>X</button>
                                                 
                                                 <ul>
                                                     <form className="form-group" onSubmit={(e)=>this.addNotes(e , k , key)}>
@@ -65,7 +76,8 @@ class List extends Component {
                                                     {
                                                         
                                                             data1.notes.map((data2,key2)=>{
-                                                                return <li key={data2.id}>{data2.name} <button onClick={this.props.deleteNote.bind(null,k,key,key2)}>X</button>
+                                                                return <li key={data2.id}>{data2.name} 
+                                                                    <button className="btn btn-danger" onClick={this.props.deleteNote.bind(null,k,key,key2)}>X</button>
                                                                  
                                                                     </li>
                                                             })

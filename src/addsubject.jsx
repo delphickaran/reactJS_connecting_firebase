@@ -15,10 +15,13 @@ class Addsubject extends Component{
         e.preventDefault();
         var text = this.refs.subject.value.trim();
         console.log(text);
-        if(!text){
+        if(text!==""){
+            this.props.addSubject(text);
+        }
+        else{
             alert("enter a subject");
         }
-        this.props.addSubject(text);
+        
        this.refs.subject.value="";
     }
     
