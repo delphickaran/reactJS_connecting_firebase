@@ -2,99 +2,38 @@ import React,{ Component } from 'react';
 import List from './list';
 import './app.css'
 import Addsubject from './addsubject';
-
+import {init as firebaseInit} from './firebase';
+import {addSection as add} from './firebase';
+import {getSectionsDB as DBdata} from './firebase';
 class App extends Component{
     constructor(props){
         super(props);
+        firebaseInit()
+       
         this.state = {
-            subjects: [
-                {
-                    id : 1,
-                    name: "Maths",
-                    topic: [
-                        {
-                            id : 1,
-                            name: "mtopic",
-                            notes: [
-                                {
-                                    id : 1,
-                                    name: "mnotes"
-                                },
-                                {
-                                    id: 2,
-                                    name: "mnotes2"
-                                }
-                            ]
-                        },
-                        {
-                            id: 2,
-                            name: "mtopic2",
-                            notes: [
-                                {
-                                    id : 1,
-                                    name: "mnotes"
-                                },
-                                {
-                                    id: 2,
-                                    name: "mnotes2"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    name: "English",
-                    topic: [
-                        {
-                            id : 1,
-                            name: "etopic",
-                            notes: [
-                                {
-                                    id : 1,
-                                    name: "enotes"
-                                },
-                                {
-                                    id: 2,
-                                    name: "enotes"
-                                }
-                            ]
-                        },
-                        {
-                            id: 2,
-                            name: "etopic2",
-                            notes: [
-                                {
-                                    id : 1,
-                                    name: "enotes"
-                                },
-                                {
-                                    id: 2,
-                                    name: "enotes"
-                                }
-                            ]
-                        }
-                    ]
-                    
-                }
-            ]
+            subjects: []
             
         }
     }
    
+    
+    
     handleAddSubject(text){
         var newSubject = {
             id: this.state.subjects.length + 1,
             name: text,
             topic:[]
         }
-    console.log(this.state.subjects.concat(newSubject))
+        var data = this.state.subjects.concat(newSubject)
         this.setState({subjects: this.state.subjects.concat(newSubject)})
+        console.log(data)
+        add(data);
     }
     
     handleAddTopic(text , k){
+        this.state.subjects[k].topic === undefined ? this.state.subjects[k].topic.length === 1 : "hello"
         var newTopic = {
-            id: this.state.subjects[k].topic.length + 1,
+            id: (this.state.subjects[k].topic.length + 1),
             name: text,
             notes:[]
         }
@@ -102,6 +41,7 @@ class App extends Component{
         data[k].topic = data[k].topic.concat(newTopic);
         console.log(data);
         this.setState({subjects: data})
+        add(data);
         
     }
     
@@ -117,6 +57,7 @@ class App extends Component{
             console.log(data[k].topic[key].notes);
         console.log(data);
         this.setState({subjects: data})
+        add(data);
        
     }
     
@@ -129,6 +70,7 @@ class App extends Component{
       data.splice(k,1);
       console.log(data);
       this.setState({subjects : data})
+      add(data);
     }
     deleteTopic(k,key){  
         console.log( k +" " + key)
@@ -136,6 +78,7 @@ class App extends Component{
         data[k].topic.splice(key,1);
         console.log(data);
         this.setState({subjects: data})
+        add(data);
     }
     deleteNote(k,key,key2){  
         console.log(k + " "+ key +" "+ key2)
@@ -143,11 +86,13 @@ class App extends Component{
         data[k].topic[key].notes.splice(key2,1);
         console.log(data);
         this.setState({subjects: data})
+        add(data);
+        
     }
  
 
-    componentWillMount(){
-       
+    componentDidMount(){
+       DBdata().then(val=>{if(val!== null){this.setState({subjects:val})}})
     }
     render(){
         return(

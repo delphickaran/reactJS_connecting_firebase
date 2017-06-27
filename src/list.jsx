@@ -31,7 +31,6 @@ class List extends Component {
     }
     
     changeNotes(e){
-        console.log(e.target.value)
         this.setState({inputNote : e.target.value})
     }
     addNotes(e , k , key){
@@ -63,7 +62,7 @@ class List extends Component {
                                       <input type="text" ref="topic" onChange={(e)=>this.changeTopic(e)} placeholder="Enter new topic"/>
                                       <button className="btn btn-primary">Add Topic</button></form>
                                   {
-                                        data.topic.map((data1 , key)=>{
+                                        data.topic !== undefined ? data.topic.map((data1 , key)=>{
                                             return <li key={data1.id}>{data1.name}
                                                 <button className="btn btn-danger" onClick={this.props.deleteTopic.bind(null,k,key)}>X</button>
                                                 
@@ -85,7 +84,7 @@ class List extends Component {
                                                     
                                                 </ul>
                                             </li>
-                                        })  
+                                        })  : console.log("no topic")
                                     }
                                   
                               </ul>
