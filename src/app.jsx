@@ -5,6 +5,7 @@ import Addsubject from './addsubject';
 import {init as firebaseInit} from './firebase';
 import {addSection as add} from './firebase';
 import {getSectionsDB as DBdata} from './firebase';
+import Userlist from './container/dataList';
 class App extends Component{
     constructor(props){
         super(props);
@@ -99,6 +100,10 @@ class App extends Component{
             <div className="App">
                 <Addsubject addSubject={(text)=>this.handleAddSubject(text)}/>
                 <List subjects={this.state.subjects} topicAdd={(text,k)=>this.handleAddTopic(text , k)} notesAdd={(text,k,key)=>this.handleAddNotes(text , k , key)} deleteSubject={this.deleteSubject.bind(this)} deleteTopic={this.deleteTopic.bind(this)} deleteNote={this.deleteNote.bind(this)}/>
+                
+                <h1>Through using Redux</h1>
+                
+                <Userlist/>
                 
             </div>
                   
